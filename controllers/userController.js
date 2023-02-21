@@ -3,28 +3,6 @@ const { ObjectId } = require('mongoose').Types;
 // import user and thought models
 const { User, Thought } = require('../models');
 
-// Aggregate function to get the number of students overall
-const headCount = async () =>
-  Student.aggregate()
-    .count('studentCount')
-    .then((numberOfStudents) => numberOfStudents);
-
-// Aggregate function for getting the overall grade using $avg
-const grade = async (studentId) =>
-  Student.aggregate([
-    // only include the given student by using $match
-    { $match: { _id: ObjectId(studentId) } },
-    {
-      $unwind: '$assignments',
-    },
-    {
-      $group: {
-        _id: ObjectId(studentId),
-        overallGrade: { $avg: '$assignments.score' },
-      },
-    },
-  ]);
-
 module.exports = {
   // Get all users
   getUsers(req, res) {
@@ -38,9 +16,11 @@ module.exports = {
   // Get a single user
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
+      .populate({
+        path: 'thoughts',
+        select: '-__v',
+      })
       .select('-__v')
-      .populate('thoughts')
-      .populate('friends')
       .then(async (user) =>
         !user
           ? res.status(404).json({ message: 'User not found' })
