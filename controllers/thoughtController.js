@@ -11,7 +11,7 @@ module.exports = {
   // Get a thought
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
-      .select('-__v')
+      // .select('-__v')
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: 'No thought found' })
@@ -23,13 +23,14 @@ module.exports = {
   // Create a thought
   createThought(req, res) {
     Thought.create(req.body)
-      .then(({ _id }) => {
+      .then((data) => {
         return User.findOneAndUpdate(
-          { _id: req.body.userId },
-          { $push: { thoughts: _id } },
+          { username: req.body.username },
+          { $push: { thoughts: data._id } },
           { new: true }
         )
       })
+      .then((thoughtData => res.status(200).json(thoughtData)))
       .catch((err) => {
         console.log(err);
         return res.status(500).json(err);
@@ -93,7 +94,7 @@ module.exports = {
   removeReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $pull: { reactions: { reactionId: params.reactionId } } },
+      { $pull: { reactions: { reactionId: req.params.reactionId } } },
       { runValidators: true, new: true }
     )
       .then((thought) =>

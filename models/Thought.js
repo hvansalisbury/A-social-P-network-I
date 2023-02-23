@@ -7,7 +7,7 @@ const reactionSchema = new Schema(
   {
     reactionId: {
       type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
+       default: () => new Types.ObjectId(),
     },
     reactionBody: {
       type: String,
@@ -21,7 +21,7 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: created => dayjs(createdAtVal).format('MMMM D, YYYY [at] h:mm A'),
+      get: created => dayjs(created).format('MMMM D, YYYY [at] h:mm A'),
     },
   },
   {
@@ -44,7 +44,7 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: created => dayjs(createdAtVal).format('MMMM D, YYYY [at] h:mm A'),
+      get: created => dayjs(created).format('MMMM D, YYYY [at] h:mm A'),
     },
     username: {
       type: String,
