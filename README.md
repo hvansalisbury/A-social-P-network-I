@@ -32,7 +32,17 @@ Start the application by running npm start or node index.js in the main folder. 
 
 ## Walkthrough
 
+[Walkthrough Video](https://drive.google.com/file/d/1j_Th_SwDva4UPvRT_BNOnN6m-dPzN0bg/view)
+
 ## Screenshots
+
+![Get all users](./images/get-all-users.png)
+![Update user](./images/update-user.png)
+![Remove friend](./images/remove-friend.png)
+![Get all thoughts](./images/get-all-thoughts.png)
+![Update thought](./images/update-thought.png)
+![Add comment](./images/add-comment.png)
+![Remove comment](./images/remove-comment.png)
 
 ## License
 
